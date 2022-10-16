@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Navigation from './components/Navigation';
+import OutputTable from './components/OutputTable';
+import MethodSelector from './components/MethodSelector';
+import Progress from './components/Progress';
+import Badge from 'react-bootstrap/Badge'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+import {Row, Col} from 'react-bootstrap'
+
+
+import './App.css';
+import FileSelector from './components/FileSelector';
+
+function App(props) {
+  return (    
+    <Container>
+      <Row>
+        <Navigation></Navigation>
+      </Row>
+      <br></br>
+      <Row>
+        <FileSelector></FileSelector>
+      </Row>
+      <Row>
+        <MethodSelector></MethodSelector>
+      </Row>
+      <Row><Progress></Progress></Row>      
+      <Row>
+        <OutputTable></OutputTable>
+      </Row>
+      <Row>
+        <div>
+          <Badge bg="primary">Data</Badge>{' '}
+          <Badge bg="success">Metadata</Badge>{' '}
+        </div>
+      </Row>
+    </Container>
   );
 }
 
