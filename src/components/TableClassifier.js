@@ -26,7 +26,10 @@ class TableClassifier extends React.Component {
 
     handleUpload = (isNotAvaliable) => {
         this.setState({isNotProcessButtonAvaliable: isNotAvaliable})
-        console.log(this.state.isNotProcessButtonAvaliable)
+    }
+
+    handleSelectMethod = (m) => {
+        this.setState({method: m})
     }
 
     render() {
@@ -35,16 +38,20 @@ class TableClassifier extends React.Component {
                 <Row>
                     <Navigation></Navigation>
                 </Row>
-                <br></br>
+                <br>
+                </br>
                 <Row>
                     <FileSelector onUpload={this.handleUpload}>                        
                     </FileSelector>
                 </Row>
                 <Row>
-                    <MethodSelector></MethodSelector>
+                    <MethodSelector
+                        onChangeMethod = {this.handleSelectMethod}
+                    >
+                    </MethodSelector>
                 </Row>
                 <ProcessButton 
-                    isProcessButtonAvaliable = {this.state.isProcessButtonAvaliable}
+                    isProcessButtonAvaliable = {this.state.isNotProcessButtonAvaliable}
                 >                    
                 </ProcessButton>
                 <Row>

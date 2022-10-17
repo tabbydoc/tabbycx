@@ -11,11 +11,16 @@ class MethodSelector extends React.Component {
       <Form className="mb-3">
           <Form.Group className="mb-3">
               <Form.Label htmlFor="disabledTextInput">Choose method:</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select 
+                aria-label="Default select example"
+                onChange={(e) => this.props.onChangeMethod(e.target.value)}
+              >
               <option>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>        
+              <option value="1">Yoshida</option>
+              <option value="2">Jung</option>
+              <option value="3">Embley</option> 
+              <option value="4">Nishida</option>
+              <option value="5">Our method</option>
               </Form.Select>
           </Form.Group>
       </Form>
