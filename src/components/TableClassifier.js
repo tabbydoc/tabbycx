@@ -54,6 +54,10 @@ class TableClassifier extends React.Component {
                     isProcessButtonAvaliable = {this.state.isNotProcessButtonAvaliable}
                 >                    
                 </ProcessButton>
+                <br>
+                </br>
+                <br>
+                </br>
                 <Row>
                     <Progress></Progress>
                 </Row>      

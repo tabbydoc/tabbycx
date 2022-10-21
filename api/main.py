@@ -1,15 +1,17 @@
-from flask import Flask, flash, request, redirect, url_for
+from typing import List
 
-app = Flask(__name__)
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import HTMLResponse
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+from html_parse.html_parser import parse
 
-@app.route('/upload')
-def uploadFile():
-    return redirect(request.url)
+app = FastAPI()
 
 
-if __name__ == '__main__':
-    app.run()
+@app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile | None = None):
+    if not file:
+        return {"message": "No upload file sent"}
+    else:
+        tables = parse(file)
+        return {"filename": file.filename}
