@@ -21,7 +21,7 @@ class TableClassifier extends React.Component {
             isFileUploaded: false,
             method: 0,
             isNotProcessButtonAvaliable: true,
-            fileName: ""
+            fileName: "",
         }
     }
 
@@ -78,7 +78,7 @@ class TableClassifier extends React.Component {
                     <Progress></Progress>
                 </Row> */}     
                 <Row>
-                    <OutputTable></OutputTable>
+                    <OutputTable tables={this.state.tables}></OutputTable>
                 </Row>
                 <Row>
                     <div>
