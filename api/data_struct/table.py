@@ -1,10 +1,6 @@
 from collections import OrderedDict
 from typing import List, Optional
 
-from dedoc.data_structures.cell_property import CellProperty
-from dedoc.data_structures.table_metadata import TableMetadata
-
-
 class Table:
 
     def __init__(self, cells: List[List[str]]) -> None:
