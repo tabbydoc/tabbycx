@@ -20,12 +20,28 @@ class TableClassifier extends React.Component {
         this.state = {
             isFileUploaded: false,
             method: 0,
-            isNotProcessButtonAvaliable: true
+            isNotProcessButtonAvaliable: true,
+            fileName: ""
         }
     }
 
-    handleUpload = (isNotAvaliable) => {
+    handleUpload = (isNotAvaliable, fName, event) => {
         this.setState({isNotProcessButtonAvaliable: isNotAvaliable})
+        this.setState({fileName: fName})
+        event.preventDefault();
+        const data = new FormData();
+        data.append('file', 
+                        event.target.files[0],
+                        this.state.fileName);
+        fetch("http://127.0.0.1:8000/uploadfile", {
+             method: 'POST',
+             headers: {
+                 'Accept': 'application/json',
+             },
+             body: data
+        }).then((response) =>  {
+           return response.text();
+        })
     }
 
     handleSelectMethod = (m) => {
@@ -41,16 +57,16 @@ class TableClassifier extends React.Component {
                 <br>
                 </br>
                 <Row>
-                    <FileSelector onUpload={this.handleUpload}>                        
-                    </FileSelector>
-                </Row>
-                <Row>
                     <MethodSelector
                         onChangeMethod = {this.handleSelectMethod}
                     >
                     </MethodSelector>
                 </Row>
-                <ProcessButton 
+                <Row>
+                    <FileSelector onUpload={this.handleUpload}>                        
+                    </FileSelector>
+                </Row>
+                {/*<ProcessButton 
                     isProcessButtonAvaliable = {this.state.isNotProcessButtonAvaliable}
                 >                    
                 </ProcessButton>
@@ -60,7 +76,7 @@ class TableClassifier extends React.Component {
                 </br>
                 <Row>
                     <Progress></Progress>
-                </Row>      
+                </Row> */}     
                 <Row>
                     <OutputTable></OutputTable>
                 </Row>

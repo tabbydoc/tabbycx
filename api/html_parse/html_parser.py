@@ -19,7 +19,5 @@ def parse(file: UploadFile) -> List[Table]:
             cols = row.find_all('td')
             cols = [ele.text.strip() for ele in cols]
             data.append([ele for ele in cols if ele])
-            print(data)
         result_tables.append(Table(data))
-    print(result_tables)
     return result_tables
