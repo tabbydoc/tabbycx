@@ -1,4 +1,8 @@
-from tensorflow.keras.preprocessing.text import Tokenizer
+from keras.preprocessing.text import Tokenizer, text_to_word_sequence
+from keras.models import Model, Sequential, load_model
+from numpy import array, argmax
+import numpy as np
+
 
 class DeepTableExtractor:
     def __init__(self):
@@ -18,7 +22,6 @@ class DeepTableExtractor:
                         dtype='int32')
         X = tables[0:int(len(tables) * 0.75)]
         print(X[0])
-        # y = y[0:int(len(y) * 0.75)]
 
         for i, table in enumerate(X):
             for j, col in enumerate(table['texts']):
@@ -32,7 +35,7 @@ class DeepTableExtractor:
                                         data[i, j, k, z] = self.tokenizer.word_index[word]
                                         z = z + 1
 
-        return data, np.array(y), self.tokenizer.word_index
+        return data, np.array(X), self.tokenizer.word_index
 
     def predict(self, table):
         data = np.zeros((1, self.MAX_COL, self.MAX_COL_LENGTH, self.MAX_CELL_LENGTH), dtype='int32')
@@ -62,3 +65,4 @@ class DeepTableExtractor:
             for r in range(rows):
                 res[r][0] = 'meta-data'
         return res, 0
+    
