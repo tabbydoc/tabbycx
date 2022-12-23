@@ -1,23 +1,17 @@
 from typing import List
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as soup
 from fastapi import UploadFile
-
 from data_struct.table import Table
+from utils import cache
 
 
-def parse(file: UploadFile) -> List[Table]:
-    contents = file.file.read()
-    soup = BeautifulSoup(contents, "html.parser")
-    tables = soup.findAll("table")
-    result_tables = []
-    for table in tables:
-        data = []
-        table_body = table.find('tbody')
-        rows = table_body.find_all('tr')
-        for row in rows:
-            cols = row.find_all('td')
-            cols = [ele.text.strip() for ele in cols]
-            data.append([ele for ele in cols if ele])
-        result_tables.append(Table(data))
-    return result_tables
+def parse(file: UploadFile, xpath_filter=None) -> List[Table]:
+    document = file.file.read()
+    document = soup(document, 'html.parser')
+    for table in document.select('table'):
+        if len(table.select('tr')) < 2 or len(table.select('th,td')) < 4:
+            table.decompose()
+    for table in document.select('table'):
+        if xpath_filter is None or table['data-xpath'] == xpath_filter:
+            yield Table("local:file", "table['data-xpath']", table)

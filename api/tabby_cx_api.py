@@ -18,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile):
     if not file:
@@ -25,11 +26,8 @@ async def create_upload_file(file: UploadFile):
     else:
         manager = TabbyCxManager()
         tables = manager.parse_html(file)
-        json_tables = []
-        for table in tables:
-            json_tables.append(table.to_dict())
-        return {"filename": file.filename, "tables": json_tables}
+        return {"filename": file.filename, "tables": tables}
 
-    
+
 def run_api() -> None:
-    uvicorn.run("init_api:app", host='0.0.0.0', port=PORT)
+    uvicorn.run("tabby_cx_api:app", host='0.0.0.0', port=PORT)

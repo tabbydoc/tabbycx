@@ -1,4 +1,10 @@
+from traceback import print_exc
+
+from data_struct.table import functional_analysis, structural_analysis
+
+
 class TomateExtractor:
+
     def __init__(
             self,
             normalization='min-max-global',  # min-max-global, min-max-local, standard, softmax
@@ -10,24 +16,28 @@ class TomateExtractor:
         self.clustering_features = clustering_features
         self.dimensionality_reduction = dimensionality_reduction
         self.clustering_method = clustering_method
+        self.FUNCTION_NAMES_PREDICTION = {
+            -1: 'data',
+            0: 'data',
+            1: 'meta-data',
+            2: 'data',
+            3: 'data',
+            4: 'data',
+            5: 'meta-data',
+            6: 'data'
+        }
 
     def train(self, tables):
         pass
 
-    def predict(self, table):
-        with open(PATH_ORIGINAL_TABLE % table['_id'], 'rb') as fp:
-            source = load(fp)
-        source.element = soup(source.element)
-        segmentate(source, add_image_text=True, add_link_urls=False, base_url=source.url,
-                   normalization=self.normalization, text_metadata_dict=METADATA_CORPUS)
-        discount_time = cpu_time() - discount_time
+    def process(self, table):
         try:
-            functional_analysis(source, self.clustering_features, self.dimensionality_reduction, self.clustering_method)
-            structural_analysis(source)
-            predicted_table = [[FUNCTION_NAMES_PREDICTION[cell] for cell in row] for row in source.functions]
+            functional_analysis(table, self.clustering_features, self.dimensionality_reduction, self.clustering_method)
+            structural_analysis(table)
+            predicted_table = [[self.FUNCTION_NAMES_PREDICTION[cell] for cell in row] for row in table.functions]
         except:
-            print_exc()
-        return predicted_table, discount_time
+            table.error = print_exc()
+
+        return predicted_table
 
 
-evaluate(TomateExtractor, 'tomate')
