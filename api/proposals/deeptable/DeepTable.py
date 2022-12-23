@@ -1,3 +1,5 @@
+from tensorflow.keras.preprocessing.text import Tokenizer
+
 class DeepTableExtractor:
     def __init__(self):
         self.MAX_COL = 9
